@@ -3,6 +3,7 @@
 **Role:** Product Manager  
 **Timeline:** April 2026 – Present  
 **Platform:** AI-powered job search platform  
+**Live dashboard (Netlify):** [View on Netlify](https://careeraienterpriseadmin.netlify.app)  
 **Live dashboard:** [View on GitHub Pages](https://github.com/Chins-10/CareerAI-Enterprise-Dashboard/settings/pages) 
 **Live product:** [CareerAI](https://www.careerai.io/)
 
@@ -87,10 +88,13 @@ competitive research. The full B2B feature set includes:
 
 ## How to view
 
-**Option 1 — Live interactive version:**  
+**Option 1 — Netlify (recommended — fastest load):**  
+👉 [https://careeraienterpriseadmin.netlify.app](https://careeraienterpriseadmin.netlify.app)
+
+**Option 2 — Live interactive version:**  
 👉 [View on GitHub Pages](https://chins-10.github.io/CareerAI-Enterprise-Dashboard/))
 
-**Option 2 — Run locally:**
+**Option 3 — Run locally:**
 ```bash
 git clone https://github.com/Chins-10/careerai-enterprise-dashboard
 cd careerai-enterprise-dashboard
@@ -109,6 +113,8 @@ open index.html
 | Data visualization | Pipeline, progress bars, funnel, leaderboard |
 | Frontend build | HTML, CSS, JavaScript — no frameworks, no dependencies |
 | Deployment | GitHub Pages with continuous deployment |
+| Netlify | Primary deployment and hosting |
+| GitHub Pages | Secondary deployment |
 
 ---
 
