@@ -113,8 +113,7 @@ open index.html
 | Data visualization | Pipeline, progress bars, funnel, leaderboard |
 | Frontend build | HTML, CSS, JavaScript — no frameworks, no dependencies |
 | Deployment | GitHub Pages with continuous deployment |
-| Netlify | Primary deployment and hosting |
-| GitHub Pages | Secondary deployment |
+
 
 ---
 
