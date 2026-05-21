@@ -1,0 +1,375 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans,-apple-system,sans-serif);background:#0f0f13;color:var(--color-text-primary)}
+.app{display:flex;height:100vh;min-height:700px}
+
+.sidebar{width:230px;background:#1a1a24;border-right:0.5px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;flex-shrink:0}
+.sidebar-logo{padding:22px 18px 18px;border-bottom:0.5px solid rgba(255,255,255,0.06)}
+.logo-mark{display:flex;align-items:center;gap:8px}
+.logo-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#378ADD,#7F77DD);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff}
+.logo-text{font-size:15px;font-weight:500;color:#fff}
+.logo-text span{color:#378ADD}
+.plan-badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:rgba(55,138,221,0.15);color:#378ADD;margin-top:6px;letter-spacing:0.04em}
+
+.sidebar-nav{padding:12px 10px;flex:1;overflow-y:auto}
+.nav-section{font-size:10px;font-weight:500;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.1em;padding:10px 8px 5px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--border-radius-md);font-size:13px;color:rgba(255,255,255,0.5);cursor:pointer;margin-bottom:1px;transition:all 0.15s}
+.nav-item:hover{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.8)}
+.nav-item.active{background:rgba(55,138,221,0.15);color:#378ADD}
+.nav-item i{font-size:16px;flex-shrink:0}
+.nav-badge{margin-left:auto;background:rgba(55,138,221,0.2);color:#378ADD;font-size:10px;padding:1px 6px;border-radius:20px}
+
+.sidebar-footer{padding:12px 10px;border-top:0.5px solid rgba(255,255,255,0.06)}
+.org-card{background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.08);border-radius:var(--border-radius-lg);padding:10px 12px;cursor:pointer;transition:background 0.15s}
+.org-card:hover{background:rgba(255,255,255,0.08)}
+.org-row{display:flex;align-items:center;gap:10px}
+.org-avatar{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+.org-name{font-size:13px;font-weight:500;color:#fff}
+.org-type{font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px}
+
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column;background:#0f0f13}
+.topbar{background:#1a1a24;border-bottom:0.5px solid rgba(255,255,255,0.06);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-left{display:flex;align-items:center;gap:12px}
+.page-title{font-size:16px;font-weight:500;color:#fff}
+.breadcrumb{font-size:12px;color:rgba(255,255,255,0.35);display:flex;align-items:center;gap:4px}
+
+.tab-switcher{display:flex;background:rgba(255,255,255,0.06);border-radius:var(--border-radius-md);padding:3px;gap:2px}
+.tab{font-size:12px;padding:5px 16px;border-radius:6px;cursor:pointer;color:rgba(255,255,255,0.4);border:none;background:transparent;font-family:var(--font-sans);transition:all 0.15s}
+.tab.active{background:#fff;color:#0f0f13;font-weight:500}
+
+.topbar-right{display:flex;align-items:center;gap:8px}
+.btn{font-size:12px;padding:7px 14px;border-radius:var(--border-radius-md);border:0.5px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);cursor:pointer;font-family:var(--font-sans);display:flex;align-items:center;gap:5px;transition:all 0.15s}
+.btn:hover{background:rgba(255,255,255,0.1);color:#fff}
+.btn-primary{background:#378ADD;color:#fff;border-color:#378ADD}
+.btn-primary:hover{background:#2b6db0}
+.avatar-btn{width:32px;height:32px;border-radius:50%;background:rgba(55,138,221,0.2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;font-weight:500;color:#378ADD}
+
+.content{padding:20px 24px;flex:1}
+
+.welcome-bar{background:#1a1a24;border:0.5px solid rgba(255,255,255,0.06);border-radius:var(--border-radius-lg);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
+.welcome-text h3{font-size:15px;font-weight:500;color:#fff;margin-bottom:2px}
+.welcome-text p{font-size:12px;color:rgba(255,255,255,0.4)}
+.welcome-actions{display:flex;gap:8px}
+
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.kpi-card{background:#1a1a24;border:0.5px solid rgba(255,255,255,0.06);border-radius:var(--border-radius-lg);padding:16px 18px;position:relative;overflow:hidden;transition:border-color 0.15s}
+.kpi-card:hover{border-color:rgba(255,255,255,0.15)}
+.kpi-card:before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--border-radius-lg) var(--border-radius-lg) 0 0}
+.kpi-card.blue:before{background:#378ADD}
+.kpi-card.purple:before{background:#7F77DD}
+.kpi-card.pink:before{background:#D4537E}
+.kpi-card.green:before{background:#1D9E75}
+.kpi-label{font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.kpi-icon{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center}
+.kpi-val{font-size:26px;font-weight:500;color:#fff;margin-bottom:4px;line-height:1}
+.kpi-trend{font-size:11px;display:flex;align-items:center;gap:4px}
+.trend-up{color:#1D9E75}
+.trend-neutral{color:rgba(255,255,255,0.35)}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.grid-3{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-bottom:16px}
+.card{background:#1a1a24;border:0.5px solid rgba(255,255,255,0.06);border-radius:var(--border-radius-lg);padding:18px;transition:border-color 0.15s}
+.card:hover{border-color:rgba(255,255,255,0.1)}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:500;color:#fff;display:flex;align-items:center;gap:7px}
+.card-title i{font-size:15px}
+.card-action{font-size:11px;color:#378ADD;cursor:pointer}
+
+.flow-card{background:#1a1a24;border:0.5px solid rgba(255,255,255,0.06);border-radius:var(--border-radius-lg);padding:18px;margin-bottom:16px}
+.flow-steps{display:flex;align-items:center;margin-top:4px}
+.flow-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative}
+.flow-step:not(:last-child):after{content:'';position:absolute;right:0;top:18px;width:50%;height:1px;background:rgba(255,255,255,0.08);z-index:0}
+.flow-step:not(:first-child):before{content:'';position:absolute;left:0;top:18px;width:50%;height:1px;background:rgba(255,255,255,0.08);z-index:0}
+.flow-icon-wrap{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;border:1.5px solid rgba(255,255,255,0.1)}
+.flow-icon-wrap.done{border-color:transparent}
+.flow-num{font-size:15px;font-weight:500;color:#fff;margin-top:8px}
+.flow-lbl{font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px;text-align:center}
+.flow-pct{font-size:10px;margin-top:1px}
+
+.student-table{width:100%;border-collapse:collapse}
+.student-table th{text-align:left;padding:0 10px 10px;font-size:11px;font-weight:500;color:rgba(255,255,255,0.3);letter-spacing:0.04em;text-transform:uppercase;border-bottom:0.5px solid rgba(255,255,255,0.06)}
+.student-table td{padding:11px 10px;border-bottom:0.5px solid rgba(255,255,255,0.04);vertical-align:middle;font-size:12px;color:rgba(255,255,255,0.7)}
+.student-table tr:last-child td{border-bottom:none}
+.student-table tr:hover td{background:rgba(255,255,255,0.03)}
+.s-avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;flex-shrink:0}
+.s-name{font-size:12px;font-weight:500;color:#fff}
+
+.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500}
+.b-green{background:rgba(29,158,117,0.15);color:#1D9E75}
+.b-blue{background:rgba(55,138,221,0.15);color:#378ADD}
+.b-amber{background:rgba(186,117,23,0.15);color:#EF9F27}
+.b-purple{background:rgba(127,119,221,0.15);color:#AFA9EC}
+.b-gray{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5)}
+
+.progress-wrap{display:flex;align-items:center;gap:8px}
+.progress-track{flex:1;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;transition:width 0.4s}
+.progress-pct{font-size:11px;color:rgba(255,255,255,0.4);min-width:28px;text-align:right}
+
+.pipe-stages{display:flex;gap:8px;margin-bottom:16px}
+.pipe-stage{flex:1;background:rgba(255,255,255,0.03);border:0.5px solid rgba(255,255,255,0.06);border-radius:var(--border-radius-md);padding:12px;text-align:center}
+.pipe-num{font-size:20px;font-weight:500;color:#fff}
+.pipe-lbl{font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px}
+.pipe-dot{width:6px;height:6px;border-radius:50%;margin:6px auto 0}
+
+.cohort-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid rgba(255,255,255,0.04)}
+.cohort-item:last-child{border-bottom:none}
+.cohort-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cohort-name{font-size:12px;font-weight:500;color:rgba(255,255,255,0.8);flex:1}
+.cohort-meta{font-size:10px;color:rgba(255,255,255,0.3)}
+
+.activity-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:0.5px solid rgba(255,255,255,0.04)}
+.activity-row:last-child{border-bottom:none}
+.act-icon{width:30px;height:30px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.act-text{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.5;flex:1}
+.act-time{font-size:10px;color:rgba(255,255,255,0.25);margin-top:2px}
+
+.prep-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:0.5px solid rgba(255,255,255,0.04)}
+.prep-row:last-child{border-bottom:none}
+.prep-name{font-size:12px;font-weight:500;color:rgba(255,255,255,0.8);flex:1}
+.prep-sessions{font-size:11px;color:rgba(255,255,255,0.3)}
+
+.stat-inline{display:flex;align-items:center;gap:4px;font-size:11px;color:rgba(255,255,255,0.35);margin-top:1px}
+</style>
+
+<h2 class="sr-only">CareerAI enterprise admin dashboard — university and bootcamp scenarios with student onboarding workflows, progress tracking, pipeline view, and activity feed</h2>
+
+<div class="app">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <div class="logo-icon">C</div>
+        <div class="logo-text">Career<span>AI</span></div>
+      </div>
+      <div class="plan-badge">Enterprise</div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">Overview</div>
+      <div class="nav-item active" onclick="setNav(this)"><i class="ti ti-layout-dashboard" aria-hidden="true"></i> Dashboard <span class="nav-badge">New</span></div>
+      <div class="nav-item" onclick="setNav(this)"><i class="ti ti-users" aria-hidden="true"></i> Students</div>
+      <div class="nav-item" onclick="setNav(this)"><i class="ti ti-chart-bar" aria-hidden="true"></i> Analytics</div>
+      <div class="nav-section">Manage</div>
+      <div class="nav-item" onclick="setNav(this)"><i class="ti ti-user-plus" aria-hidden="true"></i> Invite students</div>
+      <div class="nav-item" onclick="setNav(this)"><i class="ti ti-layers" aria-hidden="true"></i> Cohorts</div>
+      <div class="nav-item" onclick="setNav(this)"><i class="ti ti-file-text" aria-hidden="true"></i> Reports</div>
+      <div class="nav-item" onclick="setNav(this)"><i class="ti ti-microphone" aria-hidden="true"></i> Interview prep</div>
+      <div class="nav-section">Account</div>
+      <div class="nav-item" onclick="setNav(this)"><i class="ti ti-settings" aria-hidden="true"></i> Settings</div>
+      <div class="nav-item" onclick="setNav(this)"><i class="ti ti-credit-card" aria-hidden="true"></i> Billing</div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="org-card">
+        <div class="org-row">
+          <div class="org-avatar" id="org-avatar" style="background:rgba(55,138,221,0.2);color:#378ADD">UT</div>
+          <div>
+            <div class="org-name" id="org-name">UT Arlington</div>
+            <div class="org-type" id="org-type">University · 240 seats</div>
+          </div>
+          <i class="ti ti-chevron-down" style="font-size:14px;color:rgba(255,255,255,0.25);margin-left:auto" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <div>
+          <div class="page-title">Dashboard</div>
+          <div class="breadcrumb"><span id="breadcrumb-org">UT Arlington</span><i class="ti ti-chevron-right" style="font-size:11px" aria-hidden="true"></i><span>Overview</span></div>
+        </div>
+        <div class="tab-switcher" style="margin-left:16px">
+          <button class="tab active" onclick="switchOrg('university',this)">University</button>
+          <button class="tab" onclick="switchOrg('bootcamp',this)">Bootcamp</button>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn"><i class="ti ti-download" aria-hidden="true"></i> Export</button>
+        <button class="btn"><i class="ti ti-bell" aria-hidden="true"></i></button>
+        <button class="btn btn-primary"><i class="ti ti-user-plus" aria-hidden="true"></i> Invite students</button>
+        <div class="avatar-btn" id="top-avatar">CG</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="welcome-bar">
+        <div class="welcome-text">
+          <h3 id="welcome-title">Good morning, Admin 👋</h3>
+          <p id="welcome-sub">UT Arlington · Spring 2026 cohort · 187 active students</p>
+        </div>
+        <div class="welcome-actions">
+          <button class="btn"><i class="ti ti-file-export" aria-hidden="true"></i> Download report</button>
+          <button class="btn btn-primary"><i class="ti ti-plus" aria-hidden="true"></i> Add cohort</button>
+        </div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi-card blue">
+          <div class="kpi-label">Total students <div class="kpi-icon" style="background:rgba(55,138,221,0.15)"><i class="ti ti-users" style="font-size:14px;color:#378ADD" aria-hidden="true"></i></div></div>
+          <div class="kpi-val" id="kpi-students">187</div>
+          <div class="kpi-trend trend-up"><i class="ti ti-trending-up" style="font-size:12px" aria-hidden="true"></i><span id="kpi-students-trend">+12 this month</span></div>
+        </div>
+        <div class="kpi-card purple">
+          <div class="kpi-label">Applications sent <div class="kpi-icon" style="background:rgba(127,119,221,0.15)"><i class="ti ti-send" style="font-size:14px;color:#7F77DD" aria-hidden="true"></i></div></div>
+          <div class="kpi-val" id="kpi-apps">1,284</div>
+          <div class="kpi-trend trend-up"><i class="ti ti-trending-up" style="font-size:12px" aria-hidden="true"></i><span id="kpi-apps-trend">+8% vs last month</span></div>
+        </div>
+        <div class="kpi-card pink">
+          <div class="kpi-label">Interviews scheduled <div class="kpi-icon" style="background:rgba(212,83,126,0.15)"><i class="ti ti-calendar-event" style="font-size:14px;color:#D4537E" aria-hidden="true"></i></div></div>
+          <div class="kpi-val" id="kpi-interviews">94</div>
+          <div class="kpi-trend trend-up"><i class="ti ti-trending-up" style="font-size:12px" aria-hidden="true"></i><span id="kpi-interviews-trend">32% interview rate</span></div>
+        </div>
+        <div class="kpi-card green">
+          <div class="kpi-label">Offers received <div class="kpi-icon" style="background:rgba(29,158,117,0.15)"><i class="ti ti-trophy" style="font-size:14px;color:#1D9E75" aria-hidden="true"></i></div></div>
+          <div class="kpi-val" id="kpi-offers">31</div>
+          <div class="kpi-trend trend-up"><i class="ti ti-trending-up" style="font-size:12px" aria-hidden="true"></i><span id="kpi-offers-trend">17% offer rate</span></div>
+        </div>
+      </div>
+
+      <div class="flow-card">
+        <div class="card-header">
+          <div class="card-title"><i class="ti ti-arrows-right" style="color:#378ADD" aria-hidden="true"></i> Student onboarding & job search flow</div>
+          <span class="badge b-blue" id="flow-label">Spring 2026 cohort</span>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-icon-wrap done" style="background:rgba(29,158,117,0.2)"><i class="ti ti-mail" style="font-size:15px;color:#1D9E75" aria-hidden="true"></i></div>
+            <div class="flow-num" id="f1">240</div>
+            <div class="flow-lbl">Invite sent</div>
+            <div class="flow-pct" style="color:#1D9E75">100%</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-icon-wrap done" style="background:rgba(55,138,221,0.2)"><i class="ti ti-user-check" style="font-size:15px;color:#378ADD" aria-hidden="true"></i></div>
+            <div class="flow-num" id="f2">210</div>
+            <div class="flow-lbl">Account created</div>
+            <div class="flow-pct" style="color:#378ADD" id="pct2">88%</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-icon-wrap done" style="background:rgba(127,119,221,0.2)"><i class="ti ti-file-upload" style="font-size:15px;color:#7F77DD" aria-hidden="true"></i></div>
+            <div class="flow-num" id="f3">198</div>
+            <div class="flow-lbl">Resume uploaded</div>
+            <div class="flow-pct" style="color:#7F77DD" id="pct3">83%</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-icon-wrap done" style="background:rgba(186,117,23,0.2)"><i class="ti ti-checklist" style="font-size:15px;color:#EF9F27" aria-hidden="true"></i></div>
+            <div class="flow-num" id="f4">187</div>
+            <div class="flow-lbl">Profile complete</div>
+            <div class="flow-pct" style="color:#EF9F27" id="pct4">78%</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-icon-wrap done" style="background:rgba(212,83,126,0.2)"><i class="ti ti-briefcase" style="font-size:15px;color:#D4537E" aria-hidden="true"></i></div>
+            <div class="flow-num" id="f5">162</div>
+            <div class="flow-lbl">First job applied</div>
+            <div class="flow-pct" style="color:#D4537E" id="pct5">68%</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-icon-wrap done" style="background:rgba(127,119,221,0.2)"><i class="ti ti-microphone" style="font-size:15px;color:#7F77DD" aria-hidden="true"></i></div>
+            <div class="flow-num" id="f6i">94</div>
+            <div class="flow-lbl">Interviewing</div>
+            <div class="flow-pct" style="color:#7F77DD" id="pct6">39%</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-icon-wrap done" style="background:rgba(29,158,117,0.2)"><i class="ti ti-trophy" style="font-size:15px;color:#1D9E75" aria-hidden="true"></i></div>
+            <div class="flow-num" id="f6">31</div>
+            <div class="flow-lbl">Offer received</div>
+            <div class="flow-pct" style="color:#1D9E75" id="pct7">13%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="ti ti-users" style="color:#378ADD" aria-hidden="true"></i> Student progress</div>
+            <span class="card-action">View all →</span>
+          </div>
+          <table class="student-table">
+            <thead><tr><th>Student</th><th>Status</th><th>Apps</th><th>Progress</th></tr></thead>
+            <tbody id="student-tbody"></tbody>
+          </table>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="ti ti-git-branch" style="color:#7F77DD" aria-hidden="true"></i> Application pipeline</div>
+            </div>
+            <div class="pipe-stages">
+              <div class="pipe-stage"><div class="pipe-num" id="p1">162</div><div class="pipe-lbl">Applied</div><div class="pipe-dot" style="background:#378ADD"></div></div>
+              <div class="pipe-stage"><div class="pipe-num" id="p2">94</div><div class="pipe-lbl">Interview</div><div class="pipe-dot" style="background:#7F77DD"></div></div>
+              <div class="pipe-stage"><div class="pipe-num" id="p3">48</div><div class="pipe-lbl">Final</div><div class="pipe-dot" style="background:#D4537E"></div></div>
+              <div class="pipe-stage"><div class="pipe-num" id="p4">31</div><div class="pipe-lbl">Offer</div><div class="pipe-dot" style="background:#1D9E75"></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title"><i class="ti ti-layers" style="color:#EF9F27" aria-hidden="true"></i> Cohorts</div>
+              <span class="card-action">Manage →</span>
+            </div>
+            <div id="cohort-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="ti ti-microphone" style="color:#D4537E" aria-hidden="true"></i> Interview prep leaderboard</div>
+            <span class="badge b-purple" id="prep-badge">Top performers</span>
+          </div>
+          <div id="interview-activity"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title"><i class="ti ti-activity" style="color:#1D9E75" aria-hidden="true"></i> Recent activity</div>
+            <span class="card-action">View all →</span>
+          </div>
+          <div id="recent-activity"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const data={university:{org:{name:'UT Arlington',type:'University · 240 seats',avatar:'UT',color:'rgba(55,138,221,0.2)',textColor:'#378ADD'},welcome:{title:'Good morning, Admin',sub:'UT Arlington · Spring 2026 cohort · 187 active students'},kpi:{students:'187',apps:'1,284',interviews:'94',offers:'31',studentsTrend:'+12 this month',appsTrend:'+8% vs last month',interviewsTrend:'32% interview rate',offersTrend:'17% offer rate'},flow:{label:'Spring 2026 cohort',f1:'240',f2:'210',f3:'198',f4:'187',f5:'162',f6i:'94',f6:'31',pct2:'88%',pct3:'83%',pct4:'78%',pct5:'68%',pct6:'39%',pct7:'13%'},pipeline:{p1:'162',p2:'94',p3:'48',p4:'31'},students:[{name:'Aisha Patel',initials:'AP',bg:'rgba(55,138,221,0.2)',tc:'#378ADD',status:'Interviewing',badge:'b-purple',apps:12,progress:72},{name:'Marcus Chen',initials:'MC',bg:'rgba(29,158,117,0.2)',tc:'#1D9E75',status:'Offer received',badge:'b-green',apps:8,progress:100},{name:'Sofia Rivera',initials:'SR',bg:'rgba(212,83,126,0.2)',tc:'#D4537E',status:'Applying',badge:'b-blue',apps:5,progress:40},{name:'James Okafor',initials:'JO',bg:'rgba(186,117,23,0.2)',tc:'#EF9F27',status:'Final round',badge:'b-amber',apps:15,progress:88},{name:'Priya Singh',initials:'PS',bg:'rgba(127,119,221,0.2)',tc:'#7F77DD',status:'Applying',badge:'b-blue',apps:3,progress:25}],cohorts:[{name:'Computer Science',meta:'Fall 2025 · 64 students',pct:78,color:'#378ADD'},{name:'Data Science',meta:'Spring 2026 · 48 students',pct:62,color:'#7F77DD'},{name:'Business Analytics',meta:'Spring 2026 · 75 students',pct:45,color:'#1D9E75'}],prep:[{name:'Marcus Chen',initials:'MC',sessions:7,score:'94%',badge:'b-green',color:'rgba(29,158,117,0.2)',tc:'#1D9E75'},{name:'James Okafor',initials:'JO',sessions:9,score:'92%',badge:'b-green',color:'rgba(186,117,23,0.2)',tc:'#EF9F27'},{name:'Aisha Patel',initials:'AP',sessions:6,score:'87%',badge:'b-blue',color:'rgba(55,138,221,0.2)',tc:'#378ADD'},{name:'Sofia Rivera',initials:'SR',sessions:3,score:'71%',badge:'b-amber',color:'rgba(212,83,126,0.2)',tc:'#D4537E'}],activity:[{icon:'ti-trophy',bg:'rgba(29,158,117,0.2)',ic:'#1D9E75',text:'Marcus Chen received an offer from Google',time:'2 hours ago'},{icon:'ti-calendar-event',bg:'rgba(55,138,221,0.2)',ic:'#378ADD',text:'Aisha Patel scheduled final round at Microsoft',time:'4 hours ago'},{icon:'ti-users',bg:'rgba(127,119,221,0.2)',ic:'#7F77DD',text:'12 new students completed onboarding',time:'Yesterday'},{icon:'ti-file-text',bg:'rgba(186,117,23,0.2)',ic:'#EF9F27',text:'James Okafor tailored 3 resumes today',time:'Yesterday'}]},bootcamp:{org:{name:'Code Academy',type:'Bootcamp · 80 seats',avatar:'CA',color:'rgba(127,119,221,0.2)',textColor:'#7F77DD'},welcome:{title:'Good morning, Admin',sub:'Code Academy · Web Dev Cohort 12 · 67 active students'},kpi:{students:'67',apps:'843',interviews:'52',offers:'18',studentsTrend:'+5 this week',appsTrend:'+15% vs last month',interviewsTrend:'44% interview rate',offersTrend:'26% offer rate'},flow:{label:'Web Dev Cohort 12',f1:'80',f2:'74',f3:'71',f4:'67',f5:'58',f6i:'52',f6:'18',pct2:'93%',pct3:'89%',pct4:'84%',pct5:'73%',pct6:'65%',pct7:'23%'},pipeline:{p1:'58',p2:'52',p3:'24',p4:'18'},students:[{name:'Tyler Brooks',initials:'TB',bg:'rgba(127,119,221,0.2)',tc:'#7F77DD',status:'Offer received',badge:'b-green',apps:9,progress:100},{name:'Nadia Hassan',initials:'NH',bg:'rgba(212,83,126,0.2)',tc:'#D4537E',status:'Final round',badge:'b-amber',apps:11,progress:90},{name:'Raj Mehta',initials:'RM',bg:'rgba(55,138,221,0.2)',tc:'#378ADD',status:'Interviewing',badge:'b-purple',apps:7,progress:65},{name:'Chloe Park',initials:'CP',bg:'rgba(29,158,117,0.2)',tc:'#1D9E75',status:'Applying',badge:'b-blue',apps:4,progress:35},{name:'Devon Walsh',initials:'DW',bg:'rgba(186,117,23,0.2)',tc:'#EF9F27',status:'Applying',badge:'b-blue',apps:2,progress:20}],cohorts:[{name:'Full Stack Web Dev',meta:'Cohort 12 · 40 students',pct:88,color:'#7F77DD'},{name:'UX/UI Design',meta:'Cohort 8 · 27 students',pct:55,color:'#D4537E'}],prep:[{name:'Tyler Brooks',initials:'TB',sessions:11,score:'96%',badge:'b-green',color:'rgba(127,119,221,0.2)',tc:'#7F77DD'},{name:'Nadia Hassan',initials:'NH',sessions:8,score:'89%',badge:'b-green',color:'rgba(212,83,126,0.2)',tc:'#D4537E'},{name:'Raj Mehta',initials:'RM',sessions:5,score:'78%',badge:'b-amber',color:'rgba(55,138,221,0.2)',tc:'#378ADD'},{name:'Chloe Park',initials:'CP',sessions:2,score:'65%',badge:'b-amber',color:'rgba(29,158,117,0.2)',tc:'#1D9E75'}],activity:[{icon:'ti-trophy',bg:'rgba(29,158,117,0.2)',ic:'#1D9E75',text:'Tyler Brooks accepted offer from Shopify',time:'1 hour ago'},{icon:'ti-microphone',bg:'rgba(127,119,221,0.2)',ic:'#7F77DD',text:'Nadia Hassan completed 8 interview prep sessions',time:'3 hours ago'},{icon:'ti-send',bg:'rgba(55,138,221,0.2)',ic:'#378ADD',text:'Cohort 12 sent 143 applications this week',time:'Today'},{icon:'ti-user-check',bg:'rgba(186,117,23,0.2)',ic:'#EF9F27',text:'5 new students completed profile setup',time:'Yesterday'}]}};
+
+function render(org){
+  const d=data[org];
+  document.getElementById('org-avatar').textContent=d.org.avatar;
+  document.getElementById('org-avatar').style.background=d.org.color;
+  document.getElementById('org-avatar').style.color=d.org.textColor;
+  document.getElementById('org-name').textContent=d.org.name;
+  document.getElementById('org-type').textContent=d.org.type;
+  document.getElementById('breadcrumb-org').textContent=d.org.name;
+  document.getElementById('welcome-title').textContent=d.welcome.title+' 👋';
+  document.getElementById('welcome-sub').textContent=d.welcome.sub;
+  document.getElementById('kpi-students').textContent=d.kpi.students;
+  document.getElementById('kpi-apps').textContent=d.kpi.apps;
+  document.getElementById('kpi-interviews').textContent=d.kpi.interviews;
+  document.getElementById('kpi-offers').textContent=d.kpi.offers;
+  document.getElementById('kpi-students-trend').textContent=d.kpi.studentsTrend;
+  document.getElementById('kpi-apps-trend').textContent=d.kpi.appsTrend;
+  document.getElementById('kpi-interviews-trend').textContent=d.kpi.interviewsTrend;
+  document.getElementById('kpi-offers-trend').textContent=d.kpi.offersTrend;
+  document.getElementById('flow-label').textContent=d.flow.label;
+  ['f1','f2','f3','f4','f5','f6i','f6','pct2','pct3','pct4','pct5','pct6','pct7'].forEach(k=>document.getElementById(k).textContent=d.flow[k]);
+  ['p1','p2','p3','p4'].forEach(k=>document.getElementById(k).textContent=d.pipeline[k]);
+  document.getElementById('student-tbody').innerHTML=d.students.map(s=>`<tr><td><div style="display:flex;align-items:center;gap:8px"><div class="s-avatar" style="background:${s.bg};color:${s.tc}">${s.initials}</div><span class="s-name">${s.name}</span></div></td><td><span class="badge ${s.badge}">${s.status}</span></td><td style="text-align:center;font-weight:500;color:#fff">${s.apps}</td><td><div class="progress-wrap"><div class="progress-track"><div class="progress-fill" style="width:${s.progress}%;background:${s.progress===100?'#1D9E75':s.progress>60?'#378ADD':'#EF9F27'}"></div></div><span class="progress-pct">${s.progress}%</span></div></td></tr>`).join('');
+  document.getElementById('cohort-list').innerHTML=d.cohorts.map(c=>`<div class="cohort-item"><div class="cohort-dot" style="background:${c.color}"></div><div style="flex:1"><div class="cohort-name">${c.name}</div><div class="cohort-meta">${c.meta}</div></div><div class="progress-wrap" style="min-width:80px"><div class="progress-track"><div class="progress-fill" style="width:${c.pct}%;background:${c.color}"></div></div><span class="progress-pct">${c.pct}%</span></div></div>`).join('');
+  document.getElementById('interview-activity').innerHTML=d.prep.map((s,i)=>`<div class="prep-row"><div style="font-size:13px;font-weight:500;color:rgba(255,255,255,0.3);min-width:18px">${i+1}</div><div class="s-avatar" style="background:${s.color};color:${s.tc}">${s.initials}</div><div style="flex:1"><div class="prep-name">${s.name}</div><div class="stat-inline"><i class="ti ti-microphone" style="font-size:11px" aria-hidden="true"></i>${s.sessions} sessions</div></div><span class="badge ${s.badge}">${s.score}</span></div>`).join('');
+  document.getElementById('recent-activity').innerHTML=d.activity.map(a=>`<div class="activity-row"><div class="act-icon" style="background:${a.bg}"><i class="ti ${a.icon}" style="font-size:14px;color:${a.ic}" aria-hidden="true"></i></div><div><div class="act-text">${a.text}</div><div class="act-time">${a.time}</div></div></div>`).join('');
+}
+
+function switchOrg(org,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  render(org);
+}
+
+function setNav(el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+}
+
+render('university');
+</script>
