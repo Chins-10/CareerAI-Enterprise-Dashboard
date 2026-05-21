@@ -122,6 +122,6 @@ open index.html
 | Repository | Description |
 |---|---|
 | [careerai-competitive-analysis](https://github.com/Chins-10/CareerAI-competitive-Analysis) | Full research documents and raw data |
-| [careerai-stakeholder-report](https://github.com/Chins-10/careerai-stakeholder-report) | Pre-sprint stakeholder strategy document |
+| [careerai-stakeholder-report](https://github.com/Chins-10/CareerAI-Stakeholder-Report) | Pre-sprint stakeholder strategy document |
 
 ---
