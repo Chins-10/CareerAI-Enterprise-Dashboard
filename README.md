@@ -4,7 +4,7 @@
 **Timeline:** April 2026 – Present  
 **Platform:** AI-powered job search platform  
 **Live dashboard:** [View on GitHub Pages](https://chins-10.github.io/careerai-enterprise-dashboard)  
-**Live product:** [CareerAI](https://silver-sprite-84e615.netlify.app)
+**Live product:** [CareerAI](https://www.careerai.io/)
 
 ---
 
@@ -88,7 +88,7 @@ competitive research. The full B2B feature set includes:
 ## How to view
 
 **Option 1 — Live interactive version:**  
-👉 [View on GitHub Pages](https://chins-10.github.io/careerai-enterprise-dashboard)
+👉 [View on GitHub Pages](https://chins-10.github.io/CareerAI-Enterprise-Dashboard/))
 
 **Option 2 — Run locally:**
 ```bash
