@@ -3,7 +3,7 @@
 **Role:** Product Manager  
 **Timeline:** April 2026 – Present  
 **Platform:** AI-powered job search platform  
-**Live dashboard:** [View on GitHub Pages](https://chins-10.github.io/careerai-enterprise-dashboard)  
+**Live dashboard:** [View on GitHub Pages](https://github.com/Chins-10/CareerAI-Enterprise-Dashboard/settings/pages) 
 **Live product:** [CareerAI](https://www.careerai.io/)
 
 ---
